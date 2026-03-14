@@ -17,6 +17,11 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <button className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">
+        Button
+      </button>
+      <button className="btn btn-primary w-64 rounded-full">Button</button>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -29,7 +34,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
 export default App
