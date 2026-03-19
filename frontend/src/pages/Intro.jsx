@@ -4,8 +4,7 @@ import NavBar from '../components/NavBar';
 const Intro = () => {
   return (
     <div>
-    <NavBar />
-      <div className="hero bg-base-200 min-h-screen">
+      <div className="hero bg-base-200 min-h-screen w-screen">
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold">Members-Only</h1>
