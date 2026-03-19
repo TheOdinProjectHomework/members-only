@@ -1,10 +1,11 @@
 import React from 'react'
 import NavBar from '../components/NavBar';
+import { Link } from 'react-router';
 
 const Intro = () => {
   return (
     <div>
-      <div className="hero bg-base-200 min-h-screen w-screen">
+      <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold">Members-Only</h1>
@@ -12,7 +13,9 @@ const Intro = () => {
               Join the modern blogging community designed for deep connection
               and effortless sharing. Simple, beautiful, and distraction-free.
             </p>
-            <button className="btn btn-primary">Get Started for Free</button>
+            <button className="btn btn-primary">
+              <Link to='/signup'>Get Started for Free</Link>
+            </button>
           </div>
         </div>
       </div>
