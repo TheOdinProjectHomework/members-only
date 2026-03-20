@@ -49,3 +49,28 @@ export const logIn = (req, res, next) => {
     });
   })(req, res, next);
 };
+
+export const logOut = (req, res, next) => {
+  req.logout((err) => {
+    if(err) {
+      return next(err);
+    }
+    return res.json({ success: true, message: "Logged out"});
+  })
+}
+
+export const getMe = (req, res) => {
+  if(!req.user) {
+    return res.status(401).json({ user: null });
+  }
+
+  res.status(200).json({
+    user: {
+      id: req.user._id,
+      username: req.user.username,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName
+    }
+  })
+};
