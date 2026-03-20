@@ -1,4 +1,5 @@
 import express from "express"
+import cors from "cors"
 import dotenv from "dotenv"
 import { connectDB } from "./db/connectDB.js";
 import userRouter from "./routes/user.routes.js"
@@ -9,10 +10,20 @@ import session from "express-session";
 dotenv.config();
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+    }
 }))
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
