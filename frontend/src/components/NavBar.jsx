@@ -1,7 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router';
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
+  let links = ["login", "signup" ];
+  let links2 = ["posts", "profile"];
+
+  const currentLinks = !user ? links : links2;
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
@@ -11,27 +16,15 @@ const NavBar = () => {
       </div>
       <div className="flex-1">
         <ul className="menu menu-horizontal px-1 items-center w-full justify-end gap-4">
-          <NavLink
-            to="/posts"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
-          >
-            Posts
-          </NavLink>
-          <NavLink
-            to="/profile"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
-          >
-            Profile
-          </NavLink>
-          <NavLink
-            to="/login"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
-          >
-            Log In
-          </NavLink>
-          <NavLink to="/signup" className="btn ml-1">
-            Sign Up
-          </NavLink>
+          {currentLinks.map((link) => (
+                <NavLink
+                  to={`/${link}`}
+                  key={link}
+                  className={({ isActive }) => (isActive ? "font-bold" : "")}
+                >
+                  {link}
+                </NavLink>
+              ))}
         </ul>
       </div>
     </div>
