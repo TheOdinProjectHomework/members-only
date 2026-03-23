@@ -6,6 +6,7 @@ import userRouter from "./routes/user.routes.js"
 import authRouter from "./routes/auth.routes.js";
 import passport from "./config/passport.js";
 import session from "express-session";
+import messageRouter from "./routes/message.routes.js";
 
 dotenv.config();
 const app = express();
@@ -29,6 +30,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/users/", userRouter);
+app.use("/messages", messageRouter);
 app.use("/", authRouter);
 
 app.get("/", (req, res) => {
