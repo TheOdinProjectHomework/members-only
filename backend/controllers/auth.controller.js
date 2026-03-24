@@ -66,7 +66,7 @@ export const getMe = (req, res) => {
 
   res.status(200).json({
     user: {
-      id: req.user._id,
+      _id: req.user._id,
       username: req.user.username,
       email: req.user.email,
       firstName: req.user.firstName,

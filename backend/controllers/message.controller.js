@@ -1,15 +1,28 @@
+import { json } from "express";
 import { Message } from "../models/message.model.js";
 import { User } from "../models/user.model.js";
 
 export const getMessages = async (req, res) => {
     try {
-        const msgs = await Message.find();
+        const msgs = await Message.find().populate('author', 'firstName lastName').exec();
         if(!msgs) return res.status(400).json({ success: false, message: "No messages found" });
         res.status(200).json({ success: true, data: msgs });
     } catch (error) {
         console.log("Error getting all messages");
         res.status(400).json({ success: false, message: error.message });
     }
+}
+
+export const myMessages = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const msgs = await Message.find({ author: userId }).populate('author', 'createdAt').exec();
+    return res.status(200).json({ success: true, data: msgs });
+  } catch(error) {
+    console.log("Error fetching user msges");
+    return res.status(400).json({ success: false, message: error.message });
+  }
 }
 
 export const addMessage = async (req, res) => {
