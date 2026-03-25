@@ -42,7 +42,26 @@ export const MessageProvider = ({ children }) => {
         }
     }
 
+    const postMessage = async (msgData) => {
+        try {
+            const res = await fetch(`http://localhost:3001/messages/add`, {
+                method: "POST",
+                headers: { "Content-type": "application/json"},
+                body: JSON.stringify(msgData)
+            });
+
+            const data = await res.json();
+
+            if(!data.success) throw new Error("Error posting message");
+
+            return data;
+        } catch (error) {
+            console.log(error);
+            return;
+        }
+    }
+
     return (
-        <MessageContext.Provider value={{ msgs, getAllMsgs, loading, getMyMsgs, myData }}>{children}</MessageContext.Provider>
+        <MessageContext.Provider value={{ msgs, getAllMsgs, loading, getMyMsgs, myData, postMessage }}>{children}</MessageContext.Provider>
     )
 }

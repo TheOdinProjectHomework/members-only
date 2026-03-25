@@ -1,11 +1,11 @@
 import PostCard from '../components/PostCard';
 import { useMessage } from '../context/MessageContext';
 import { useEffect } from 'react';
-import { useUser } from '../context/UserContext';
+// import { useUser } from '../context/UserContext';
 
 const Posts = () => {
   const { getAllMsgs, msgs, loading } = useMessage();
-  const { user } = useUser();
+  // const { user } = useUser();
   // console.log("Posts user: ", user);
 
   useEffect(() => {
@@ -20,8 +20,12 @@ const Posts = () => {
         <h1 className="text-2xl font-bold">Latest Posts</h1>
         <p>Stay updated with the latest insights from our community.</p>
       </div>
-      <div className="m-4">
-        {loading ? <h3>Loading...</h3> : msgs.map((msg) => (<PostCard key={msg._id} msg={msg} />))}
+      <div className="m-4 flex flex-col items-center gap-2">
+        {loading ? (
+          <span className="loading loading-bars loading-xl"></span>
+        ) : (
+          msgs.map((msg) => <PostCard key={msg._id} msg={msg} />)
+        )}
       </div>
     </div>
   );
