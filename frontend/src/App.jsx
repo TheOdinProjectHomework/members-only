@@ -15,21 +15,20 @@ function App() {
     <>
       <NavBar user={user} />
       <Routes>
-        <Route path="/" element={<Intro />} />
+        <Route path="/" element={user ? <Navigate to="/posts" /> : <Intro />} />
         <Route
           path="/login"
           element={user ? <Navigate to="/posts" /> : <Login />}
-          // element={<Login />}
-          />
-        <Route path="/signup" element={user? <Posts /> : <Signup />} />
+        />
+        <Route path="/signup" element={user ? <Posts /> : <Signup />} />
         <Route
           path="/posts"
           element={user ? <Posts /> : <Navigate to="/login" />}
-          />
+        />
         <Route
           path="/profile"
           element={user ? <Profile /> : <Navigate to="/login" />}
-          />
+        />
       </Routes>
     </>
   );

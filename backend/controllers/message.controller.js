@@ -4,7 +4,10 @@ import { User } from "../models/user.model.js";
 
 export const getMessages = async (req, res) => {
     try {
-        const msgs = await Message.find().populate('author', 'firstName lastName').exec();
+        const msgs = await Message.find()
+          .populate("author", "firstName lastName")
+          .sort({ updatedAt: -1 })
+          .exec();
         if(!msgs) return res.status(400).json({ success: false, message: "No messages found" });
         res.status(200).json({ success: true, data: msgs });
     } catch (error) {
@@ -17,7 +20,10 @@ export const myMessages = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const msgs = await Message.find({ author: userId }).populate('author', 'createdAt').exec();
+    const msgs = await Message.find({ author: userId })
+      .populate("author")
+      .sort({ updatedAt: -1 })
+      .exec();
     return res.status(200).json({ success: true, data: msgs });
   } catch(error) {
     console.log("Error fetching user msges");
