@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useMessage } from '../context/MessageContext';
 import toast from "react-hot-toast";
 import PostCard from '../components/PostCard';
+import NewMsgForm from '../components/NewMsgForm';
 
 const Profile = () => {
   const { user, setUser } = useUser();
@@ -46,10 +47,6 @@ const Profile = () => {
     getMyMsgs(user._id);
   }, []);
 
-  // useEffect(() => {
-  //   console.log("myData: ", myData);
-  // }, [myData]);
-
   const handleLogout = async () => {
     const res = await fetch(`http://localhost:3001/logout`, {
       credentials: "include",
@@ -70,20 +67,14 @@ const Profile = () => {
     <div className="bg-base-200 min-h-screen">
       <div className="py-4 bg-base-300 flex justify-between">
         <div className="flex-1 pl-4">
-          <h1 className="text-2xl font-bold">
-            {firstName} {lastName}
-          </h1>
-          <p>
-            {username} | {email}
-          </p>
+          <h1 className="text-2xl font-bold">{firstName} {lastName}</h1>
+          <p>{username} | {email}</p>
         </div>
         <div className="flex flex-wrap justify-end gap-0.5 pr-4">
           <div
             className="btn ml-1"
             onClick={() => document.getElementById("my_modal_2").showModal()}
-          >
-            Create Message
-          </div>
+          >Create Message</div>
           <div className="btn ml-1">Edit Profile</div>
           <div className="btn btn-warning ml-1" onClick={handleLogout}>
             Logout
@@ -97,45 +88,16 @@ const Profile = () => {
           myData.map((msg) => <PostCard key={msg._id} msg={msg} />)
         )}
       </div>
-      
 
       {/* Modal */}
-      <dialog id="my_modal_2" className="modal">
-        <div className="modal-box">
-          {/* <h3 className="font-bold text-lg">New Message!</h3> */}
-          <form onSubmit={handlePost}>
-            <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-4 mx-auto">
-              <legend className="fieldset-legend">Message</legend>
-
-              <label className="label">Title</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-
-              <label className="label">Content</label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Content"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              />
-
-              <button className="btn btn-neutral mt-4">Create</button>
-            </fieldset>
-          </form>
-          <div className="modal-action">
-            <form method="dialog">
-              <button className="btn">Close</button>
-            </form>
-          </div>
-        </div>
-      </dialog>
-
+      <NewMsgForm
+        handlePost={handlePost}
+        title={title}
+        setTitle={setTitle}
+        text={text}
+        setText={setText}
+      />
+      
     </div>
   );
 }
