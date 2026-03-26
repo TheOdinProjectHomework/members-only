@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router';
 import { useMessage } from '../context/MessageContext';
+import toast from "react-hot-toast";
 import PostCard from '../components/PostCard';
 
 const Profile = () => {
@@ -20,7 +21,8 @@ const Profile = () => {
     e.preventDefault();
 
     if(!checkFields()) {
-      console.log("All fields required!");
+      // console.log("All fields required!");
+      toast.error("All fields required!");
       return;
     }
 
@@ -32,9 +34,11 @@ const Profile = () => {
         navigate("/posts");
         setTitle("");
         setText("");
+        toast.success("New Message created!");
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   }
 
@@ -64,7 +68,7 @@ const Profile = () => {
   
   return (
     <div className="bg-base-200 min-h-screen">
-      <div className="py-4 bg-base-300 flex">
+      <div className="py-4 bg-base-300 flex justify-between">
         <div className="flex-1 pl-4">
           <h1 className="text-2xl font-bold">
             {firstName} {lastName}
@@ -73,7 +77,7 @@ const Profile = () => {
             {username} | {email}
           </p>
         </div>
-        <div className="flex-none pr-4">
+        <div className="flex flex-wrap justify-end gap-0.5 pr-4">
           <div
             className="btn ml-1"
             onClick={() => document.getElementById("my_modal_2").showModal()}
@@ -86,7 +90,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="m-4 flex gap-2 flex-wrap justify-center">
+      <div className="m-4 flex gap-2 flex-wrap justify-center ">
         {loading ? (
           <span className="loading loading-bars loading-xl"></span>
         ) : (

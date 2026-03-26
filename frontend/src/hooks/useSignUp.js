@@ -1,4 +1,5 @@
 import { useState } from "react"
+import toast from "react-hot-toast";
 
 const useSignUp = () => {
     const [loading, setLoading] = useState(false);
@@ -17,18 +18,17 @@ const useSignUp = () => {
 
             const data = await res.json();
 
-            if(!res.ok || !data.success) {
+            if(!res.success || !data.success) {
                 return {
                     success: false,
                     message: data?.message || "Sign up failed",
                 };
-                // throw new Error("Sign Up Failed");
             }
-            console.log("ACCOUNT CREATED!");
+            toast.success("Account Created Successfully!");
             return data;
         } catch (error) {
-            console.log(error);
-            return null;
+            throw new Error(error.message);
+            // return null;
         } finally {
             setLoading(false);
         }

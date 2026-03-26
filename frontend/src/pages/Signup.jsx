@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useSignUp from "../hooks/useSignUp";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 
 const Signup = () => {
@@ -36,12 +37,12 @@ const Signup = () => {
     e.preventDefault();
 
     if(!checkFields()) {
-      console.log("All fields required!");
+      toast.error("All fields required!");
       return;
     }; 
 
     if(!matchingPassword()) {
-      console.log("Password does not match!");
+      toast.error("Password does not match!");
       return;
     }
 
@@ -49,19 +50,17 @@ const Signup = () => {
       firstName, lastName, userName, email, password
     };
 
-    console.log(newUser);
     try {
       const data = await signUp(newUser);
 
       if(data?.success) {
         clearFields();
         navigate("/");
-        console.log("signup");
       } else {
-        console.log("Sign up failed", data);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -131,6 +130,12 @@ const Signup = () => {
           />
 
           <button className="btn btn-neutral mt-4">Create Account</button>
+        </fieldset>
+        <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-4 mx-auto flex justify-between items-center">
+          <p>Already have an account?</p>
+          <Link to="/login">
+            <p className="btn">Login</p>
+          </Link>
         </fieldset>
       </form>
     </div>

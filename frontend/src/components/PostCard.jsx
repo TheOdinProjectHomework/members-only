@@ -1,6 +1,14 @@
-const PostCard = ({ msg }) => {
-  const {title, text, author} = msg;
-  const { firstName, lastName, createdAt } = author;
+import { useUser } from "../context/UserContext";
+
+  const PostCard = ({ msg }) => {
+    const {title, text, author} = msg;
+    // console.log(msg);
+    const { firstName, lastName, createdAt } = author;
+    const { user } = useUser();
+    // let memberStatus = true;
+    const memberStatus = user.memberStatus;
+    // console.log(user.memberStatus);
+    // console.log(msg.createdAt);
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -9,8 +17,8 @@ const PostCard = ({ msg }) => {
 
   let date;
 
-  if(createdAt) {
-    date = formatDate(createdAt);
+  if(!memberStatus) {
+    date = formatDate(msg.createdAt);
   }
 
 
@@ -18,11 +26,11 @@ const PostCard = ({ msg }) => {
     <div className="card card-border bg-base-100 w-96">
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
-        <p>
-          {text}
-        </p>
+        <p>{text}</p>
         <div className="card-actions justify-end">
-          <div className="badge badge-outline">{firstName ? `${firstName} ${lastName}` : `${date}` }</div>
+          <div className="badge badge-outline">
+            {memberStatus ? `${firstName} ${lastName}` : `${date}`}
+          </div>
         </div>
       </div>
     </div>

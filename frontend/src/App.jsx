@@ -1,4 +1,5 @@
 import './App.css'
+import { Toaster } from 'react-hot-toast';
 import { Routes, Route, Navigate } from 'react-router';
 import NavBar from './components/NavBar';
 import Intro from './pages/Intro';
@@ -14,6 +15,11 @@ function App() {
   return (
     <>
       <NavBar user={user} />
+      <Toaster toastOptions={{
+        style: {
+          background: '#333', color: '#fff'
+        }
+      }}/>
       <Routes>
         <Route path="/" element={user ? <Navigate to="/posts" /> : <Intro />} />
         <Route
