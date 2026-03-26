@@ -6,12 +6,19 @@ export const signUp = async (req, res) => {
   const { firstName, lastName, username, email, password } = req.body;
 
   try {
-    const userAlreadyExists = await User.findOne({ username });
-    if (userAlreadyExists)
-      return res
-        .status(400)
-        .json({ success: false, message: "User already exists" });
-
+    const userAlreadyExists = await User.findOne({
+      $or: [{ username }, { email }],
+    });
+    if (userAlreadyExists) {
+      if(userAlreadyExists.username === username) {
+        return res.status(400)
+        .json({ success: false, message: "Username already exists" }); 
+      };
+      if(userAlreadyExists.email === email) {
+        return res.status(400)
+          .json({ success: false, message: "Email already in use" }); 
+      }
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
@@ -41,7 +48,7 @@ export const signUp = async (req, res) => {
 export const logIn = (req, res, next) => {
   passport.authenticate("local", (err, user) => {
     if (err) return next(err);
-    if (!user) return res.status(401).json({ success: false });
+    if (!user) return res.status(401).json({ success: false, message: "User not found" });
 
     req.logIn(user, (err) => {
       if (err) return next(err);
@@ -65,12 +72,14 @@ export const getMe = (req, res) => {
   }
 
   res.status(200).json({
+    success: true,
     user: {
       _id: req.user._id,
       username: req.user.username,
       email: req.user.email,
       firstName: req.user.firstName,
-      lastName: req.user.lastName
+      lastName: req.user.lastName,
+      memberStatus: req.user.memberStatus
     }
   })
 };

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import useLogin from "../hooks/login";
 import { useUser } from "../context/UserContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { setUser } = useUser();
@@ -21,11 +22,9 @@ const Login = () => {
               navigate("/posts");
               setUsername("");
               setPassword("");
-            } else {
-              console.log("Log in failed", data);
             }
         } catch (error) {
-            console.log(error);
+            toast.error(error.message);
         }
     }
 
@@ -47,6 +46,12 @@ const Login = () => {
         <input type="password" className="input" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
         <button className="btn btn-neutral mt-4">Login</button>
+      </fieldset>
+      <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-4 mx-auto flex justify-between items-center">
+        <p>Don't have an account?</p>
+        <Link to="/signup">
+          <p className="btn">Create account</p>
+        </Link>
       </fieldset>
     </form>
     </div>
