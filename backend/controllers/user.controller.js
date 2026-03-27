@@ -25,3 +25,15 @@ export const getUserById = async (req, res) => {
         return res.status(404).json({ success: false, error: error.message });
     }
 }
+
+export const editUserInfo = async (req, res) => {
+    const { id, username } = req.body;
+    try {
+        const user = await User.findByIdAndUpdate(id, { username }, { new: true });
+        if(!user) return res.status(404).json({ success: false, message: "User not found"});
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        console.log("Error updating user");
+        return res.status(404).json({ success: false, error: error.message });
+    }
+}
