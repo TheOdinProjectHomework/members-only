@@ -1,5 +1,5 @@
 import express from "express"
-import { getUserById, getUsers } from "../controllers/user.controller.js";
+import { editUserInfo, getUserById, getUsers } from "../controllers/user.controller.js";
 
 const userRouter = express.Router();
 userRouter.use(express.json());
@@ -10,6 +10,7 @@ userRouter.get("/", (req, res) => {
 
 userRouter.get("/all", getUsers);
 userRouter.get("/:id", getUserById);
+userRouter.post("/edit", editUserInfo);
 
 
 export default userRouter;

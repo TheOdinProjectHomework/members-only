@@ -2,9 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router';
 import { useMessage } from '../context/MessageContext';
+import { editUsername } from '../api/editProfile';
 import toast from "react-hot-toast";
 import PostCard from '../components/PostCard';
 import NewMsgForm from '../components/NewMsgForm';
+import EditProfileModal from '../components/EditProfileModal';
+
+  // TO DO
+  //   add edit profile form/modal
+  //   edit only firstname, lastName
+  //   option to become member by solving puzzle?
+    
 
 const Profile = () => {
   const { user, setUser } = useUser();
@@ -62,20 +70,45 @@ const Profile = () => {
       console.log("Logout failed", data);
     }
   }
+
+    const [newUsername, setNewUsername] = useState("");
+
+    const handleEdit = async (e) => {
+        e.preventDefault();
+        const req = await editUsername(newUsername, user._id);
+        if(req?.success) {
+          setNewUsername("");
+          toast.success("Username updated!");
+          navigate("/posts");
+        } else {
+          toast.error("Error updating Username");
+        }
+    }
   
   return (
     <div className="bg-base-200 min-h-screen">
       <div className="py-4 bg-base-300 flex justify-between">
         <div className="flex-1 pl-4">
-          <h1 className="text-2xl font-bold">{firstName} {lastName}</h1>
-          <p>{username} | {email}</p>
+          <h1 className="text-2xl font-bold">
+            {firstName} {lastName}
+          </h1>
+          <p>
+            {username} | {email}
+          </p>
         </div>
         <div className="flex flex-wrap justify-end gap-0.5 pr-4">
           <div
             className="btn ml-1"
             onClick={() => document.getElementById("my_modal_2").showModal()}
-          >Create Message</div>
-          <div className="btn ml-1">Edit Profile</div>
+          >
+            Create Message
+          </div>
+          <div
+            className="btn ml-1"
+            onClick={() => document.getElementById("my_modal_3").showModal()}
+          >
+            Edit Profile
+          </div>
           <div className="btn btn-warning ml-1" onClick={handleLogout}>
             Logout
           </div>
@@ -97,7 +130,8 @@ const Profile = () => {
         text={text}
         setText={setText}
       />
-      
+
+      <EditProfileModal handleEdit={handleEdit} username={newUsername} setUsername={setNewUsername} />
     </div>
   );
 }
