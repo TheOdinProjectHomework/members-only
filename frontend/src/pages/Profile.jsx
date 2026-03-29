@@ -9,7 +9,6 @@ import NewMsgForm from '../components/NewMsgForm';
 import EditProfileModal from '../components/EditProfileModal';
 
   // TO DO
-  //   add edit profile form/modal
   //   edit only firstname, lastName
   //   option to become member by solving puzzle?
     

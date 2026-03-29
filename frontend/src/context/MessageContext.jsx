@@ -7,6 +7,8 @@ export const MessageContext = createContext();
 export const useMessage = () => useContext(MessageContext);
 
 export const MessageProvider = ({ children }) => {
+    const BASEURL = "http://localhost:3001";
+
     const [msgs, setMsgs] = useState([]);
     const [loading, setLoading] = useState(false);
     const [myData, setMyData] = useState([]);
@@ -15,7 +17,7 @@ export const MessageProvider = ({ children }) => {
     const getAllMsgs = async () => {
         try {
             setLoading(true);
-            const req = await fetch(`http://localhost:3001/messages`);
+            const req = await fetch(`${BASEURL}/messages`);
             const res = await req.json();
             if(!req.status) return req;
             setMsgs(res.data);
@@ -30,7 +32,7 @@ export const MessageProvider = ({ children }) => {
     const getMyMsgs = async (userId) => {
         try {
             setLoading(true);
-            const req = await fetch(`http://localhost:3001/messages/me/${userId}`);
+            const req = await fetch(`${BASEURL}/messages/me/${userId}`);
             const res = await req.json();
             if(!res.success) return;
             setMyData(res.data);
@@ -44,7 +46,7 @@ export const MessageProvider = ({ children }) => {
 
     const postMessage = async (msgData) => {
         try {
-            const res = await fetch(`http://localhost:3001/messages/add`, {
+            const res = await fetch(`${BASEURL}/messages/add`, {
                 method: "POST",
                 headers: { "Content-type": "application/json"},
                 body: JSON.stringify(msgData)

@@ -2,6 +2,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 const useLogin = () => {
+    const BASEURL = "http://localhost:3001";
+    
     const [loading, setLoading] = useState(false);
 
     const login = async (username, password) => {
@@ -13,7 +15,7 @@ const useLogin = () => {
         setLoading(true);
 
         try {
-            const res = await fetch(`http://localhost:3001/login`, {
+            const res = await fetch(`${BASEURL}/login`, {
                 method: "POST", 
                 headers: { "Content-Type" : "application/json" },
                 credentials: "include",
