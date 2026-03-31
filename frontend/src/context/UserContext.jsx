@@ -5,13 +5,14 @@ export const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export default function UserProvider ({ children }) {
+    const BASEURL = "http://localhost:3001";
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await fetch(`http://localhost:3001/me`, {
+                const res = await fetch(`${BASEURL}/me`, {
                     credentials: "include",
                 });
 

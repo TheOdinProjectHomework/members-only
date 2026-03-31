@@ -2,6 +2,8 @@ import { useState } from "react"
 import toast from "react-hot-toast";
 
 const useSignUp = () => {
+    const BASEURL = "http://localhost:3001";
+
     const [loading, setLoading] = useState(false);
 
     const signUp = async (userData) => {
@@ -9,7 +11,7 @@ const useSignUp = () => {
 
         setLoading(true);
         try {
-            const res = await fetch(`http://localhost:3001/sign-up`, {
+            const res = await fetch(`${BASEURL}/sign-up`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
             //   credentials: "include",

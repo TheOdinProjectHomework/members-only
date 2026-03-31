@@ -1,8 +1,10 @@
+const BASEURL = "http://localhost:3001";
+
 
 export const editUsername = async (newName, id) => {
     console.log("Edit Username Function", newName, id);
     try {
-        const res = await fetch(`http://localhost:3001/users/edit`, {
+        const res = await fetch(`${BASEURL}/users/edit`, {
             method: "POST",
             headers: {"Content-type":"application/json"},
             body: JSON.stringify({username: newName, id: id})
