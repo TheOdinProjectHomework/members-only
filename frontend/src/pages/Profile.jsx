@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import PostCard from '../components/PostCard';
 import NewMsgForm from '../components/NewMsgForm';
 import EditProfileModal from '../components/EditProfileModal';
+import { logout } from '../api/auth.api';
+import { solvePuzzle } from '../api/memberStatus.api';
 
   // TO DO
   //   edit only firstname, lastName
@@ -55,18 +57,12 @@ const Profile = () => {
   }, []);
 
   const handleLogout = async () => {
-    const res = await fetch(`http://localhost:3001/logout`, {
-      credentials: "include",
-    });
-    const data = await res.json();
-
-    if (data.success) {
+    const res = await logout();
+    if (res?.success) {
       setUser(null);
       navigate("/");
-      console.log("loggedout", user);
-      console.log(data);
     } else {
-      console.log("Logout failed", data);
+      console.log("Logout failed");
     }
   }
 
@@ -82,6 +78,19 @@ const Profile = () => {
         } else {
           toast.error("Error updating Username");
         }
+    }
+
+    const [secret, setSecret] = useState("");
+
+    const handleStatusChange = async (e) => {
+      e.preventDefault();
+      const req = await solvePuzzle(user._id, secret);
+      if(req?.success) {
+        setSecret("");
+        console.log(req.message);
+        toast.success(req.message);
+        navigate("/profile");
+      }
     }
   
   return (
@@ -130,7 +139,7 @@ const Profile = () => {
         setText={setText}
       />
 
-      <EditProfileModal handleEdit={handleEdit} username={newUsername} setUsername={setNewUsername} />
+      <EditProfileModal handleEdit={handleEdit} username={newUsername} setUsername={setNewUsername} handleStatusChange={handleStatusChange} secret={secret} setSecret={setSecret} />
     </div>
   );
 }

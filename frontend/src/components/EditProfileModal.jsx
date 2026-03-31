@@ -1,11 +1,4 @@
-const EditProfileModal = ({ handleEdit, username, setUsername }) => {
-    // const [username, setUsername] = useState("");
-    // let userId = 1234;
-
-    // const handleEdit = (e) => {
-    //     e.preventDefault();
-    //     editUsername(username, userId);
-    // }
+const EditProfileModal = ({ handleEdit, username, setUsername,  handleStatusChange, secret, setSecret }) => {
 
   return (
     <dialog id="my_modal_3" className="modal">
@@ -29,7 +22,7 @@ const EditProfileModal = ({ handleEdit, username, setUsername }) => {
           </form>
         </div>
         <div>
-          <form>
+          <form onSubmit={handleStatusChange}>
             <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-4 mx-auto">
               <legend>Become a member</legend>
 
@@ -38,6 +31,8 @@ const EditProfileModal = ({ handleEdit, username, setUsername }) => {
                 type="text"
                 className="input"
                 placeholder="Do you know it?"
+                value={secret}
+                onChange={(e) => setSecret(e.target.value)}
               />
 
               <button className="btn btn-neutral mt-4">Send</button>
