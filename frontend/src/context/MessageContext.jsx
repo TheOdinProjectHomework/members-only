@@ -7,7 +7,7 @@ export const MessageContext = createContext();
 export const useMessage = () => useContext(MessageContext);
 
 export const MessageProvider = ({ children }) => {
-    const BASEURL = "http://localhost:3001";
+    const BASEURL = import.meta.env.DEV ? "http://localhost:3001/api" : "/api";
 
     const [msgs, setMsgs] = useState([]);
     const [loading, setLoading] = useState(false);
