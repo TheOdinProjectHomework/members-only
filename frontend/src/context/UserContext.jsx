@@ -14,7 +14,7 @@ export default function UserProvider ({ children }) {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await fetch(`${BASEURL}/me`, {
+                const res = await fetch(`${BASEURL}/api/me`, {
                     credentials: "include",
                 });
 

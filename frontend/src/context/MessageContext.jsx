@@ -9,7 +9,7 @@ export const useMessage = () => useContext(MessageContext);
 export const MessageProvider = ({ children }) => {
     const BASEURL = import.meta.env.DEV
       ? "http://localhost:3001/api"
-      : "https://members-only-g0et.onrender.com";
+      : "https://members-only-g0et.onrender.com/api";
 
     const [msgs, setMsgs] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ export const MessageProvider = ({ children }) => {
     const getMyMsgs = async (userId) => {
         try {
             setLoading(true);
-            const req = await fetch(`${BASEURL}/messages/me/${userId}`);
+            const req = await fetch(`${BASEURL}/api/messages/me/${userId}`);
             const res = await req.json();
             if(!res.success) return;
             setMyData(res.data);
@@ -48,7 +48,7 @@ export const MessageProvider = ({ children }) => {
 
     const postMessage = async (msgData) => {
         try {
-            const res = await fetch(`${BASEURL}/messages/add`, {
+            const res = await fetch(`${BASEURL}/api/messages/add`, {
                 method: "POST",
                 headers: { "Content-type": "application/json"},
                 body: JSON.stringify(msgData)
