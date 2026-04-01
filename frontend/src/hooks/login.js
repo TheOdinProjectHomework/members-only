@@ -1,7 +1,10 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useUser } from "../context/UserContext";
 
 const useLogin = () => {
+    const { setUser } = useUser();
+
     const BASEURL = import.meta.env.DEV
       ? "http://localhost:3001"
       : "https://members-only-g0et.onrender.com";
@@ -29,7 +32,8 @@ const useLogin = () => {
             if(!data.success) {
                 toast.error(data.message);
             }
-            
+
+            setUser(data.user);        
             localStorage.setItem("user", JSON.stringify(data));
             return data;
         } catch (error) {

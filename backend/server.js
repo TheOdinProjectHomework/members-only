@@ -16,7 +16,11 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://members-only-g0et.onrender.com"],
+    origin: [
+      "http://localhost:5173",
+      "https://members-only-g0et.onrender.com",
+      "http://localhost:5173/me",
+    ],
     credentials: true,
   }),
 );
@@ -32,6 +36,7 @@ if(process.env.NODE_ENV === "production") {
   })
 }
 
+app.set("trust proxy", 1); // delete this line
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -39,11 +44,12 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: true,
-        sameSite: "none",
+        // sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000,
     }
 }))
 
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 

@@ -11,6 +11,7 @@ import { useUser } from './context/UserContext';
 
 function App() {
   const { user } = useUser();
+  // console.log("App js: ", user);
 
   return (
     <>

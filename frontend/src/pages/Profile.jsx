@@ -12,6 +12,7 @@ import { solvePuzzle } from '../api/memberStatus.api';
 
 const Profile = () => {
   const { user, setUser } = useUser();
+  // console.log(user);
   const { getMyMsgs, loading, myData, postMessage } = useMessage();
   let navigate = useNavigate();
   const { firstName, lastName, username, email } = user;

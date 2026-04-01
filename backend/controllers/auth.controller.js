@@ -67,6 +67,7 @@ export const logOut = (req, res, next) => {
 }
 
 export const getMe = (req, res) => {
+  console.log(req);
   if(!req.user) {
     return res.status(401).json({ user: null });
   }

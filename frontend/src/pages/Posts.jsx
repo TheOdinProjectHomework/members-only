@@ -1,8 +1,11 @@
 import PostCard from '../components/PostCard';
 import { useMessage } from '../context/MessageContext';
 import { useEffect } from 'react';
+import { useUser } from '../context/UserContext';
 
 const Posts = () => {
+  const { user } = useUser();
+  // console.log(`POSTS PAGE:`, user);
   const { getAllMsgs, msgs, loading } = useMessage();
 
   useEffect(() => {
