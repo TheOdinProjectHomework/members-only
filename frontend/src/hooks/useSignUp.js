@@ -2,7 +2,9 @@ import { useState } from "react"
 import toast from "react-hot-toast";
 
 const useSignUp = () => {
-    const BASEURL = import.meta.env.DEV ? "http://localhost:3001/" : "/";
+    const BASEURL = import.meta.env.DEV
+      ? "http://localhost:3001"
+      : "https://members-only-g0et.onrender.com";
 
     const [loading, setLoading] = useState(false);
 
