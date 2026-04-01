@@ -5,7 +5,9 @@ export const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export default function UserProvider ({ children }) {
-    const BASEURL = import.meta.env.DEV ? "http://localhost:3001/api" : "/api";
+      const BASEURL = import.meta.env.DEV
+        ? "http://localhost:3001/api"
+        : "https://members-only-g0et.onrender.com";
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 

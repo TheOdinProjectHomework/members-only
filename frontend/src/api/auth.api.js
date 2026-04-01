@@ -1,4 +1,6 @@
-const BASEURL = import.meta.env.DEV ? "http://localhost:3001/api" : "/api";
+const BASEURL = import.meta.env.DEV
+  ? "http://localhost:3001"
+  : "https://members-only-g0et.onrender.com";
 
 export const logout = async () => {
   try {
