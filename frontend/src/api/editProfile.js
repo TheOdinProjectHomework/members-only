@@ -1,6 +1,6 @@
 const BASEURL = import.meta.env.DEV
   ? "http://localhost:3001/api"
-  : "https://members-only-g0et.onrender.com";
+  : "https://members-only-g0et.onrender.com/api";
 
 export const editUsername = async (newName, id) => {
   console.log("Edit Username Function", newName, id);
