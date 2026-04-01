@@ -1,5 +1,7 @@
-const EditProfileModal = ({ handleEdit, username, setUsername,  handleStatusChange, secret, setSecret }) => {
+import whoPokemon from '../assets/who_pokemon.0.jpg';
 
+const EditProfileModal = ({ handleEdit, username, setUsername,  handleStatusChange, secret, setSecret, status }) => {
+  console.log(status);
   return (
     <dialog id="my_modal_3" className="modal">
       <div className="modal-box">
@@ -27,6 +29,7 @@ const EditProfileModal = ({ handleEdit, username, setUsername,  handleStatusChan
               <legend>Become a member</legend>
 
               <label className="label">Secret Word:</label>
+              <img src={whoPokemon} alt='who is this pokemon picture' className='rounded-2xl' />
               <input
                 type="text"
                 className="input"
@@ -34,8 +37,11 @@ const EditProfileModal = ({ handleEdit, username, setUsername,  handleStatusChan
                 value={secret}
                 onChange={(e) => setSecret(e.target.value)}
               />
-
-              <button className="btn btn-neutral mt-4">Send</button>
+              {
+                status ? 
+                  <button className="btn btn-neutral mt-4" disabled>You are a member already</button> :
+                  <button className="btn btn-neutral mt-4">Send</button>
+              }
             </fieldset>
           </form>
         </div>

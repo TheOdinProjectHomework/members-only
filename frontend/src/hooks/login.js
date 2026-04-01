@@ -26,14 +26,11 @@ const useLogin = () => {
 
             if(!data.success) {
                 toast.error(data.message);
-                // throw new Error("Login Failed");
             }
             
             localStorage.setItem("user", JSON.stringify(data));
-            // console.log(data.user);
             return data;
         } catch (error) {
-            // console.log(error);
             toast.error(error.message);
             return null;
         } finally {
