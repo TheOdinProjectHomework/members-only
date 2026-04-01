@@ -10,11 +10,6 @@ import EditProfileModal from '../components/EditProfileModal';
 import { logout } from '../api/auth.api';
 import { solvePuzzle } from '../api/memberStatus.api';
 
-  // TO DO
-  //   edit only firstname, lastName
-  //   option to become member by solving puzzle?
-    
-
 const Profile = () => {
   const { user, setUser } = useUser();
   const { getMyMsgs, loading, myData, postMessage } = useMessage();
@@ -31,7 +26,6 @@ const Profile = () => {
     e.preventDefault();
 
     if(!checkFields()) {
-      // console.log("All fields required!");
       toast.error("All fields required!");
       return;
     }
@@ -87,7 +81,7 @@ const Profile = () => {
       const req = await solvePuzzle(user._id, secret);
       if(req?.success) {
         setSecret("");
-        console.log(req.message);
+        // console.log(req.message);
         toast.success(req.message);
         navigate("/profile");
       }
@@ -139,7 +133,7 @@ const Profile = () => {
         setText={setText}
       />
 
-      <EditProfileModal handleEdit={handleEdit} username={newUsername} setUsername={setNewUsername} handleStatusChange={handleStatusChange} secret={secret} setSecret={setSecret} />
+      <EditProfileModal handleEdit={handleEdit} username={newUsername} setUsername={setNewUsername} handleStatusChange={handleStatusChange} secret={secret} setSecret={setSecret} status={user.memberStatus} />
     </div>
   );
 }

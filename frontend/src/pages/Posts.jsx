@@ -9,8 +9,6 @@ const Posts = () => {
     getAllMsgs();
   }, []);
 
-  // console.log(msgs);
-
   return (
     <div className="bg-base-200 min-h-screen">
       <div className="text-left py-4 pl-6 bg-base-300">
@@ -21,7 +19,7 @@ const Posts = () => {
         {loading ? (
           <span className="loading loading-bars loading-xl"></span>
         ) : (
-          msgs.map((msg) => <PostCard key={msg._id} msg={msg} />)
+          msgs.map((msg) => <PostCard key={msg._id} msg={msg}/>)
         )}
       </div>
     </div>
