@@ -12,15 +12,15 @@ import messageRouter from "./routes/message.routes.js";
 dotenv.config();
 const __dirname = path.resolve();
 const app = express();
+app.use(express.json());
 
-if(process.env.NODE_ENV !== "production") {
-  app.use(
-    cors({
-      origin: "http://localhost:5173",
-      credentials: true,
-    }),
-  );
-}
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://members-only-g0et.onrender.com"],
+    credentials: true,
+  }),
+);
+
 
 if(process.env.NODE_ENV === "production") {
   const distPath = path.join(__dirname, "../frontend/dist");
@@ -38,9 +38,12 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
+        secure: true,
+        sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000,
     }
 }))
+
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
@@ -49,7 +52,6 @@ app.use("/api/messages", messageRouter);
 app.use("/", authRouter);
 
 app.get("/", (req, res) => {
-    // console.log(req.user);
     res.send("Members Only");
 })
 
