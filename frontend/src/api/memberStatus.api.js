@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 
-const BASEURL = "http://localhost:3001";
+const BASEURL = import.meta.env.DEV ? "http://localhost:3001/api" : "/api";
 
 export const solvePuzzle = async (id, word) => {
     if(!word) return toast.error("Field required");
