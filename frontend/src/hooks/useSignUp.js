@@ -2,7 +2,7 @@ import { useState } from "react"
 import toast from "react-hot-toast";
 
 const useSignUp = () => {
-    const BASEURL = import.meta.env.DEV ? "http://localhost:3001/api" : "/api";
+    const BASEURL = import.meta.env.DEV ? "http://localhost:3001/" : "/api";
 
     const [loading, setLoading] = useState(false);
 

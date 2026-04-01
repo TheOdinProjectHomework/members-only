@@ -46,7 +46,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/users/", userRouter);
 app.use("/api/messages", messageRouter);
-app.use("/api/", authRouter);
+app.use("/", authRouter);
 
 app.get("/", (req, res) => {
     // console.log(req.user);
