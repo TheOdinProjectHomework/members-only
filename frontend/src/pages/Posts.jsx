@@ -7,6 +7,7 @@ const Posts = () => {
   const { user } = useUser();
   // console.log(`POSTS PAGE:`, user);
   const { getAllMsgs, msgs, loading } = useMessage();
+  console.log("Posts: ", msgs);
 
   useEffect(() => {
     getAllMsgs();

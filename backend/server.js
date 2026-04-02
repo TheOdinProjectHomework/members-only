@@ -26,47 +26,48 @@ app.use(
 );
 
 
-if(process.env.NODE_ENV === "production") {
-  const distPath = path.join(__dirname, "../frontend/dist");
-  
-  app.use(express.static(distPath));
-
-  app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(distPath, "index.html"));
-  })
-}
 
 app.set("trust proxy", 1); // delete this line
 app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
         secure: true,
         // sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000,
+      }
+    }))
+    
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(express.urlencoded({ extended: false }));
+    
+    app.use("/api/users/", userRouter);
+    app.use("/api/messages", messageRouter);
+    app.use("/", authRouter);
+    
+    // app.get("/", (req, res) => {
+    //   res.send("Members Only");
+    // })
+    
+    // app.get("/failed", (req, res) => {
+    //   res.send("Failed Login");
+    // });
+    
+    if(process.env.NODE_ENV === "production") {
+      const distPath = path.join(__dirname, "../frontend/dist");
+      
+      app.use(express.static(distPath));
+    
+      app.get(/.*/, (req, res) => {
+        res.sendFile(path.join(distPath, "index.html"));
+      })
     }
-}))
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
-
-app.use("/api/users/", userRouter);
-app.use("/api/messages", messageRouter);
-app.use("/", authRouter);
-
-app.get("/", (req, res) => {
-    res.send("Members Only");
-})
-
-app.get("/failed", (req, res) => {
-  res.send("Failed Login");
-});
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
     connectDB();
     console.log(`Server listening on port: ${PORT}`);
 })
