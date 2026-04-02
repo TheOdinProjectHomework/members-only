@@ -48,13 +48,13 @@ app.use(session({
     app.use("/api/messages", messageRouter);
     app.use("/", authRouter);
     
-    app.get("/", (req, res) => {
-      res.send("Members Only");
-    })
+    // app.get("/", (req, res) => {
+    //   res.send("Members Only");
+    // })
     
-    app.get("/failed", (req, res) => {
-      res.send("Failed Login");
-    });
+    // app.get("/failed", (req, res) => {
+    //   res.send("Failed Login");
+    // });
     
     if(process.env.NODE_ENV === "production") {
       const distPath = path.join(__dirname, "../frontend/dist");
@@ -65,7 +65,7 @@ app.use(session({
         res.sendFile(path.join(distPath, "index.html"));
       })
     }
-    
+
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
     connectDB();
